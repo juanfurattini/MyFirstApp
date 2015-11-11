@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'four_in_line/game/board'
+require 'four_in_line/game/constants'
 
 describe FourInLine::Game::Board do
 
@@ -18,4 +19,48 @@ describe FourInLine::Game::Board do
 
 	end
 	
+  context "put_coin_in_column" do
+
+    before :each do
+      @board = FourInLine::Game::Board.new
+    end
+
+    it 'should allow to put a coin in everywhere with and empty board' do
+      @board.put_coin_in_column(0, 1)
+      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 1][0]).to eq(1)
+    end
+
+    it 'should have 2 player 1 coins in first column when player 1 puts in those places' do
+      @board.put_coin_in_column(0, 1)
+      @board.put_coin_in_column(0, 1)
+      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 1][0]).to eq(1)
+      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 2][0]).to eq(1)
+    end
+
+    it 'should have 4 player 1 coins in first column when player 1 puts in those places and wins' do
+      @board.put_coin_in_column(0, 1)
+      @board.put_coin_in_column(0, 1)
+      @board.put_coin_in_column(0, 1)
+      @board.put_coin_in_column(0, 1)
+      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 1][0]).to eq(1)
+      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 2][0]).to eq(1)
+      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 3][0]).to eq(1)
+      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 4][0]).to eq(1)
+      expect(@board.winner) == 1
+    end
+
+    it 'should have 4 player 1 coins in last file when player 1 puts in those places and wins' do
+      @board.put_coin_in_column(0, 1)
+      @board.put_coin_in_column(1, 1)
+      @board.put_coin_in_column(2, 1)
+      @board.put_coin_in_column(3, 1)
+      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 1][0]).to eq(1)
+      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 1][1]).to eq(1)
+      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 1][2]).to eq(1)
+      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 1][3]).to eq(1)
+      expect(@board.winner) == 1
+    end
+
+  end
+
 end

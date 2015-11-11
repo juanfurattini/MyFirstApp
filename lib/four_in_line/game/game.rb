@@ -19,7 +19,7 @@ module FourInLine
 			end
 
 			def notify_winner(player)
-				#TO DO: Implement to notify via web
+				puts "winner #{player}"
 			end
 
 			def insert_coin(column, player)
