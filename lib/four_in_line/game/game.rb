@@ -15,26 +15,38 @@ module FourInLine
 
 			private
 
-			def notify_to_player_his_turn(player)
+			def notify_to_player_his_turn
 				puts "play next #{@current_player}"
 			end
+
+      def notify_cant_repeat_player
+        puts "you've already make a move"
+      end
 
 			def notify_winner
 				puts "winner #{@current_player}"
 			end
 
-			def insert_coin(column)
-				is_there_a_winner = @board.put_coin_in_column(column, @current_player)
+			def insert_coin(column, player)
+        if (player == @current_player) then
+          notify_cant_repeat_player()
+          return false
+        end
+        is_there_a_winner = false
+				begin 
+          is_there_a_winner = @board.put_coin_in_column(column, @current_player)
+        rescue Exception => e
+          puts e
+          notify_to_player_his_turn(@current_player)
+          return false
+        end
 				if (is_there_a_winner) begin
 					notify_winner(player)
 				else
 					update_current_player()
 					notify_to_player_his_turn(@current_player)
 				end
-				rescue Exception => e
-					puts e
-          notify_to_player_his_turn(@current_player)
-				end
+        return true
 			end
 
 			def update_current_player
