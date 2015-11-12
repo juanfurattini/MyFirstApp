@@ -49,15 +49,33 @@ describe FourInLine::Game::Board do
       expect(@board.winner) == 1
     end
 
-    it 'should have 4 player 1 coins in last file when player 1 puts in those places and wins' do
+    it 'should have 4 player 1 coins in diagonal and wins' do
       @board.put_coin_in_column(0, 1)
-      @board.put_coin_in_column(1, 1)
+      @board.put_coin_in_column(1, 2)
       @board.put_coin_in_column(2, 1)
+      @board.put_coin_in_column(3, 2)
+      @board.put_coin_in_column(1, 1)
+      @board.put_coin_in_column(2, 2)
+      @board.put_coin_in_column(2, 1)
+      @board.put_coin_in_column(3, 2)
       @board.put_coin_in_column(3, 1)
-      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 1][0]).to eq(1)
-      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 1][1]).to eq(1)
-      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 1][2]).to eq(1)
-      expect(@board.board_game[FourInLine::Game::Constants::FILE_COUNT - 1][3]).to eq(1)
+      @board.put_coin_in_column(4, 2)
+      @board.put_coin_in_column(3, 1)
+      expect(@board.winner) == 1
+    end
+
+    it 'should have 4 player 1 coins in back diagonal and wins' do
+      @board.put_coin_in_column(6, 1)
+      @board.put_coin_in_column(5, 2)
+      @board.put_coin_in_column(4, 1)
+      @board.put_coin_in_column(3, 2)
+      @board.put_coin_in_column(5, 1)
+      @board.put_coin_in_column(4, 2)
+      @board.put_coin_in_column(4, 1)
+      @board.put_coin_in_column(3, 2)
+      @board.put_coin_in_column(3, 1)
+      @board.put_coin_in_column(2, 2)
+      @board.put_coin_in_column(3, 1)
       expect(@board.winner) == 1
     end
 

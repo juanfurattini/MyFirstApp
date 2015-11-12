@@ -5,6 +5,7 @@ module FourInLine
 
 			attr_accessor :current_player, :board
 			DEFAULT_FIRST_PLAYER = PLAYER_1
+			TRANSLATE = { EMPTY_BLOCK.to_s => "DRAW", PLAYER_1.to_s => "PLAYER 1", PLAYER_2.to_s => "PLAYER 2"}
 
 			def initialize
 				@current_player = DEFAULT_FIRST_PLAYER
@@ -15,30 +16,35 @@ module FourInLine
 			private
 
 			def notify_to_player_his_turn(player)
-				#TO DO: Implement to notify via web
+				puts "play next #{@current_player}"
 			end
 
-			def notify_winner(player)
-				puts "winner #{player}"
+			def notify_winner
+				puts "winner #{@current_player}"
 			end
 
-			def insert_coin(column, player)
-				@board.put_coin_in_column(column, player)
-				winner = @board.winner
-				if (winner > 0) begin
+			def insert_coin(column)
+				is_there_a_winner = @board.put_coin_in_column(column, @current_player)
+				if (is_there_a_winner) begin
 					notify_winner(player)
+				else
+					update_current_player()
+					notify_to_player_his_turn(@current_player)
 				end
+				rescue Exception => e
+					puts e
+          notify_to_player_his_turn(@current_player)
+				end
+			end
+
+			def update_current_player
 				if (@current_player == PLAYER_1) then
 					@current_player = PLAYER_2
 				else
-					@current_player = PLAYER_2
+					@current_player = PLAYER_1
 				end
-				notify_to_player_his_turn(@current_player)
-				rescue Exception => e
-					puts e
-				end
-			rescue
 			end
+
 		end
 	end
 end
