@@ -1,8 +1,8 @@
 require 'four_in_line/game/constants'
 
 module FourInLine
-	module Game
-		class Board
+  module Game
+    class Board
       include FourInLine::Game::Constants
 
       attr_reader :winner, :board_game
@@ -14,7 +14,7 @@ module FourInLine
         @board_game = Array.new(FILE_COUNT) { Array.new(COLUMN_COUNT) }
         @winner = EMPTY_BLOCK
         initialize_game_board()
-			end
+      end
 
       def put_coin_in_column(column, player)
           return insert_coin_and_evaluate_winner(column, player)
@@ -176,6 +176,6 @@ module FourInLine
         end
       end
 
-		end
-	end
+    end
+  end
 end
